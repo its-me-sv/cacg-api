@@ -19,8 +19,13 @@ app.get("/", (req, res) => {
   return res.status(200).json("Base route for CACG API");
 });
 
-app.post("/solve", (req, res) => {
-  return res.status(200).json("Solution route");
+app.post("/api/solve", (req, res) => {
+  const {addend, augend, sum} = req.body;
+  const reqBody = {
+    status: 0,
+    code: ''
+  };
+  return res.status(200).json(reqBody);
 });
 
 app.get("/*", (req, res) => {
