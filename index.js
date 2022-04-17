@@ -23,21 +23,26 @@ app.get("/", (req, res) => {
 });
 
 // code generator
-app.post("/api/solve", (req, res) => {
+app.post("/api/generate", (req, res) => {
+  // destructuring input from body
   const {addend, augend, sum} = req.body;
+  // default request body
   const reqBody = {
     status: 0,
     code: ''
   };
+  // atleast one missing/empty input field
   if (!addend?.length || !augend?.length || !sum?.length) {
     reqBody.status = -1;
     return res.status(200).json(reqBody);
   }
   const result = codeGenerator(addend, augend, sum);
+  // more than 10 distinct letters
   if (result === false) {
     reqBody.status = -2;
     return res.status(200).json(reqBody);
   }
+  // generated code
   reqBody.status = 1;
   reqBody.code = result;
   return res.status(200).json(reqBody);
