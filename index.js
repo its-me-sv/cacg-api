@@ -9,8 +9,8 @@ const codeGenerator = require('./code-gen.util');
 
 // config for rate limitter
 const serverRateLimiter = rateLimitter({
-  windowMs: 5 * 1000,
-  max: 3,
+  windowMs: 2 * 1000,
+  max: 1,
   legacyHeaders: false
 });
 
