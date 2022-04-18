@@ -44,7 +44,7 @@ const wAreDistinctFunction = os => {
 const summedUpString = word => {
   // returns a string representing in number
   let n = word.length;
-  result = [...word].map((v, i) => `(${n - i - 1} * ${v})`);
+  result = [...word].map((v, i) => `(${10 ** (n - i - 1)} * ${v})`);
   return result.join(" + ");
 };
 
