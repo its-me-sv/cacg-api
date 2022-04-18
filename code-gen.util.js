@@ -30,7 +30,7 @@ const wTimeHeader = os => {
   return os;
 };
 
-const wAreDistinctFunction = (os) => {
+const wAreDistinctFunction = os => {
   os += "def are_distinct(*args) -> bool:\n";
   os += `${indent()}'''\n`;
   os += `${indent(2)}Accepts n arguments and returns true\n`;
@@ -39,6 +39,13 @@ const wAreDistinctFunction = (os) => {
   os += `${indent()}return len(args) == len(set(args))\n`;
   os += "\n";
   return os;
+};
+
+const summedUpString = word => {
+  // returns a string representing in number
+  let n = word.length;
+  result = [...word].map((v, i) => `(${n - i - 1} * ${v})`);
+  return result.join(" + ");
 };
 
 const wSolveFunction = (os, limits, inputs) => {
@@ -59,7 +66,7 @@ const wSolveFunction = (os, limits, inputs) => {
     let letter = letters[idx];
     let lb = limits[letter];
     os += `${indent(idx + 1)}for ${letter} in range(${lb}, 10):\n`;
-    os += `${indent(idx + 2)}if not are_distinct(${[...letters.substring(0, idx + 1)].join(', ')}): continue\n`;
+    os += `${indent(idx + 2)}if not are_distinct(${letters.slice(0, idx + 1).join(', ')}): continue\n`;
   }
   // for last letter
   let idx = totalLetters - 1;
@@ -69,6 +76,22 @@ const wSolveFunction = (os, limits, inputs) => {
   os += `${indent(idx + 1)}for ${letter} in range(${lb}, 10):\n`;
   idx += 1;
   os += `${indent(idx + 1)}iterations += 1\n`;
+  // when letters are distinct
+  os += `${indent(idx + 1)}if are_distinct(${letters.join(', ')}):\n`;
+  idx += 1;
+  // summing up the letters
+  for (let word of inputs) 
+    os += `${indent(idx + 1)}${word} = ${summedUpString(word)}\n`;
+  // checking with if statement
+  os += `${indent(idx + 1)}if ${inputs[0]} + ${inputs[1]} == ${inputs[2]}:\n`;
+  idx += 1;
+  // printing the solution
+  os += `${indent(idx + 1)}print("\\n${inputs[0]} + ${inputs[1]} = ${inputs[2]}")\n`;
+  const formatter = "{} + {} = {}";
+  os += `${indent(idx + 1)}print("${formatter}".format(${inputs[0]}, ${inputs[1]}, ${inputs[2]}))\n`;
+  os += `${indent(idx + 1)}print("Iterations:", iterations)\n`;
+  os += `${indent(idx + 1)}return\n`;
+  os += `${indent()}print("\\nNo solution available")\n`;
   os += '\n';
   return os;
 };
