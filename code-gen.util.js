@@ -115,6 +115,7 @@ const wMainFunction = os => {
 };
 
 const codeGenerator = (addend, augend, sum) => {
+  const startTime = Date.now();
   // finding distinct letters
   const distinct_letters = getDistinct(addend + augend + sum);
   // more than 10 distinct letters
@@ -135,7 +136,9 @@ const codeGenerator = (addend, augend, sum) => {
   outputString += wMainFunction(outputString);
   // writing credits
   outputString += wCredits(outputString);
-  return outputString;
+  const endTime = Date.now();
+  const totalTime = endTime - startTime;
+  return {code: outputString, time: totalTime};
 };
 
 module.exports = codeGenerator;

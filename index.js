@@ -34,7 +34,8 @@ app.post("/api/generate", (req, res) => {
   // default request body
   const reqBody = {
     status: 0,
-    code: ''
+    code: '',
+    time: 0
   };
   // atleast one missing/empty input field
   if (!addend?.length || !augend?.length || !sum?.length) {
@@ -49,7 +50,8 @@ app.post("/api/generate", (req, res) => {
   }
   // generated code
   reqBody.status = 1;
-  reqBody.code = result;
+  reqBody.code = result.code;
+  reqBody.time = result.time
   return res.status(200).json(reqBody);
 });
 
