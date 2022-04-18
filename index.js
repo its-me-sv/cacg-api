@@ -1,18 +1,23 @@
+// packages
 const express = require("express");
 const morgan = require("morgan");
 const rateLimitter = require("express-rate-limit");
 
+// custom
 const morganConfig = require('./morgan.config');
+const codeGenerator = require('./code-gen.util');
+
+// config for rate limitter
 const serverRateLimiter = rateLimitter({
   windowMs: 5 * 1000,
   max: 3,
   legacyHeaders: false
 });
 
-const codeGenerator = require('./code-gen.util');
-
+// creating express instance
 const app = express();
 
+// using middlewares on express
 app.use(serverRateLimiter);
 app.use(morgan(morganConfig));
 app.use(express.json());
