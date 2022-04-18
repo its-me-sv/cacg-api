@@ -125,17 +125,17 @@ const codeGenerator = (addend, augend, sum) => {
   // output string
   let outputString = '';
   // writing credits
-  outputString += wCredits(outputString);
+  outputString = wCredits(outputString);
   // writing headers
-  outputString += wTimeHeader(outputString);
+  outputString = wTimeHeader(outputString);
   // writing are_distinct function to the file
-  outputString += wAreDistinctFunction(outputString);
+  outputString = wAreDistinctFunction(outputString);
   // writing the solve function to the file
-  outputString += wSolveFunction(outputString, lowerBounds, [addend, augend, sum]);
+  outputString = wSolveFunction(outputString, lowerBounds, [addend, augend, sum]);
   // writing the main function to the file
-  outputString += wMainFunction(outputString);
+  outputString = wMainFunction(outputString);
   // writing credits
-  outputString += wCredits(outputString);
+  outputString = wCredits(outputString);
   const endTime = Date.now();
   const totalTime = endTime - startTime;
   return {code: outputString, time: totalTime};

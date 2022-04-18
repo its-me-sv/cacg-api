@@ -17,14 +17,14 @@ const serverRateLimiter = rateLimitter({
 const corsConfig = {
   optionsSuccessStatus: 200,
   origin: process.env.NODE_ENV === "dev" 
-  ? 'http://192.168.29.97' : 'https://its-me-sv.github.io'
+  ? 'http://localhost:3000' : 'https://its-me-sv.github.io'
 };
 
 // creating express instance
 const app = express();
 
 // using middlewares on express
-app.use(cors());
+app.use(cors(corsConfig));
 app.use(serverRateLimiter);
 app.use(morgan(morganConfig));
 app.use(express.json());
