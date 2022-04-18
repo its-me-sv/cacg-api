@@ -96,6 +96,24 @@ const wSolveFunction = (os, limits, inputs) => {
   return os;
 };
 
+const wMainFunction = os => {
+  // checking main file condition
+  os += "if __name__ == '__main__':\n";
+  // adding starter
+  os += `${indent()}# starting time\n`;
+  os += `${indent()}start = time()\n`;
+  // calling solve function
+  os += `${indent()}# Calling the solve function\n`;
+  os += `${indent()}solve()\n`;
+  // adding total time
+  os += `${indent()}# total time\n`;
+  os += `${indent()}total_time = round(time() - start, 3)\n`;
+  // printing total time
+  os += `${indent()}print("Time: ${'{}'} seconds".format(total_time))\n`;
+  os += "\n";
+  return os;
+};
+
 const codeGenerator = (addend, augend, sum) => {
   // finding distinct letters
   const distinct_letters = getDistinct(addend + augend + sum);
@@ -104,16 +122,20 @@ const codeGenerator = (addend, augend, sum) => {
   // calculating the lower bounds
   const lowerBounds = findLowerBounds(distinct_letters, [addend[0], augend[0], sum[0]]);
   // output string
-  let output_string = '';
+  let outputString = '';
   // writing credits
-  output_string += wCredits(output_string);
+  outputString += wCredits(outputString);
   // writing headers
-  output_string += wTimeHeader(output_string);
+  outputString += wTimeHeader(outputString);
   // writing are_distinct function to the file
-  output_string += wAreDistinctFunction(output_string);
+  outputString += wAreDistinctFunction(outputString);
   // writing the solve function to the file
-  output_string += wSolveFunction(output_string, lowerBounds, [addend, augend, sum]);
-  return output_string;
+  outputString += wSolveFunction(outputString, lowerBounds, [addend, augend, sum]);
+  // writing the main function to the file
+  outputString += wMainFunction(outputString);
+  // writing credits
+  outputString += wCredits(outputString);
+  return outputString;
 };
 
 module.exports = codeGenerator;
