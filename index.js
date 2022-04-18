@@ -1,5 +1,6 @@
 // packages
 const express = require("express");
+const cors = require("cors");
 const morgan = require("morgan");
 const rateLimitter = require("express-rate-limit");
 
@@ -7,17 +8,23 @@ const rateLimitter = require("express-rate-limit");
 const morganConfig = require('./morgan.config');
 const codeGenerator = require('./code-gen.util');
 
-// config for rate limitter
+// configs
 const serverRateLimiter = rateLimitter({
   windowMs: 2 * 1000,
   max: 1,
   legacyHeaders: false
 });
+const corsConfig = {
+  optionsSuccessStatus: 200,
+  origin: process.env.NODE_ENV === "dev" 
+  ? 'http://192.168.29.97' : 'https://its-me-sv.github.io'
+};
 
 // creating express instance
 const app = express();
 
 // using middlewares on express
+app.use(cors());
 app.use(serverRateLimiter);
 app.use(morgan(morganConfig));
 app.use(express.json());
