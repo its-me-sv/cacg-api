@@ -4,7 +4,7 @@ const {getDistinct, findLowerBounds} = require('./common.code-gen');
 const SPACE_2 = "  ";
 
 /**
- * returns cpp indentation for given level
+ * returns c++ indentation for given level
  * @param {number} level 
  * @returns 
 */
