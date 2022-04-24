@@ -1,23 +1,12 @@
+// custom
+const {getDistinct, findLowerBounds} = require('./common.code-gen');
+
 const SPACE_4 = "    ";
 
 const indent = (level = 1) => {
   // returns python indentation for given level
   return new Array(level).fill(SPACE_4).join('');
 } ;
-
-const getDistinct = str => {
-  // returns the distinct letters as a string
-  return [...(new Set(str))].join('');
-};
-
-const findLowerBounds = (distinct_letters, first_letters) => {
-  // returns lower bound of each letter
-  const result = [...distinct_letters].reduce((acc, val) => {
-    acc[val] = Number(first_letters.includes(val));
-    return acc;
-  }, {});
-  return result;
-};
 
 const wCredits = os => {
   os += "'''Code generated with Crypt Arithmetic Code Generator'''\n";
