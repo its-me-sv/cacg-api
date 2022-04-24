@@ -114,7 +114,7 @@ const wMainFunction = os => {
   return os;
 };
 
-const codeGenerator = (addend, augend, sum) => {
+const pythonCodeGen = (addend, augend, sum) => {
   const startTime = Date.now();
   // finding distinct letters
   const distinct_letters = getDistinct(addend + augend + sum);
@@ -141,4 +141,4 @@ const codeGenerator = (addend, augend, sum) => {
   return {code: outputString, time: totalTime};
 };
 
-module.exports = codeGenerator;
+module.exports = pythonCodeGen;

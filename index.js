@@ -6,7 +6,7 @@ const rateLimitter = require("express-rate-limit");
 
 // custom
 const morganConfig = require('./morgan.config');
-const codeGenerator = require('./code-gen.util');
+const codeGenerator = require('./code-gens');
 
 // configs
 const serverRateLimiter = rateLimitter({
@@ -47,16 +47,16 @@ app.post("/api/generate", (req, res) => {
   // default request body
   const reqBody = {
     status: 0,
-    code: '',
     time: 0,
-    lang: +lang
+    lang: +lang,
+    code: '',
   };
   // atleast one missing/empty input field
   if (!addend?.length || !augend?.length || !sum?.length) {
     reqBody.status = -1;
     return res.status(200).json(reqBody);
   }
-  const result = codeGenerator(addend, augend, sum);
+  const result = codeGenerator[+lang](addend, augend, sum);
   // more than 10 distinct letters
   if (result === false) {
     reqBody.status = -2;
