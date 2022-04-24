@@ -38,11 +38,18 @@ app.get("/", (req, res) => {
 app.post("/api/generate", (req, res) => {
   // destructuring input from body
   const {addend, augend, sum} = req.body;
+  const {lang} = req.query;
+  // missing or invalid lang property
+  if (lang === undefined)
+    return res.status(400).json("Missing query param lang");
+  if (![0, 1, 2, 3, 4].includes(+lang))
+    return res.status(400).json("Invalid valid for param lang");
   // default request body
   const reqBody = {
     status: 0,
     code: '',
-    time: 0
+    time: 0,
+    lang: +lang
   };
   // atleast one missing/empty input field
   if (!addend?.length || !augend?.length || !sum?.length) {
