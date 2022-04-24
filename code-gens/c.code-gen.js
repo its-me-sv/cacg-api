@@ -57,6 +57,60 @@ const summedUpString = word => {
 };
 
 const wSolveFunction = (os, limits, inputs) => {
+  os += "int solve() {\n";
+  // writing docstring
+  os += `${indent()}/*\n`;
+  os += `${indent(2)}Prints the solution with no. of\n`;
+  os += `${indent(2)}iterations if the solution exists\n`;
+  os += `${indent()}*/\n`;
+  os += `${indent()}unsigned long int iterations = 0;\n`;
+  // writing loops
+  const letters = Object.keys(limits);
+  const totalLetters = letters.length;
+  // for 1st letter
+  let letter = letters[0];
+  let lb = limits[letter];
+  os += `${indent()}for (int ${letter} = ${lb}; ${letter} < 10; ${letter} += 1) {\n`;
+  // for 2nd to n-1th letter
+  for (let idx = 1; idx < totalLetters - 1; idx += 1) {
+    letter = letters[idx];
+    lb = limits[letter];
+    os += `${indent(idx + 1)}for (int ${letter} = ${lb}; ${letter} < 10; ${letter} += 1) {\n`;
+    let backLetters = letters.slice(0, idx + 1).join(', ');
+    os += `${indent(idx + 2)}if (!are_distinct(${idx + 1}, ${backLetters})) continue;\n`;
+  }
+  // for last letter
+  let idx = totalLetters - 1;
+  letter = letters[idx];
+  lb = limits[letter];
+  // last loop
+  os += `${indent(idx + 1)}for (int ${letter} = ${lb}; ${letter} < 10; ${letter} += 1) {\n`;
+  idx += 1;
+  os += `${indent(idx + 1)}iterations += 1;\n`;
+  // when letters are distinct
+  os += `${indent(idx + 1)}if (are_distinct(${totalLetters}, ${letters.join(', ')})) {\n`;
+  idx += 1;
+  // summing up the letters
+  for (let word of inputs)
+    os += `${indent(idx + 1)}long int ${word} = ${summedUpString(word)};\n`;
+  // checking with if statement
+  os += `${indent(idx + 1)}if (${inputs[0]} + ${inputs[1]} == ${inputs[2]}) {\n`;
+  idx += 1;
+  // printing the solution
+  os += `${indent(idx + 1)}printf("\\n${inputs[0]} + ${inputs[1]} = ${inputs[2]}\\n");\n`;
+  const formatter = "%ld + %ld = %ld\\n";
+  os += `${indent(idx + 1)}printf("${formatter}",${inputs[0]}, ${inputs[1]}, ${inputs[2]});\n`;
+  os += `${indent(idx + 1)}printf("Iterations: %lu\\n", iterations);\n`;
+  os += `${indent(idx + 1)}return 1;\n`;
+  // closing loops
+  while (idx) {
+    idx -= 1;
+    os += `${indent(idx + 1)}}\n`;
+  }
+  // function end
+  os += `${indent()}printf("No solution available\\n");\n`;
+  os += `${indent()}return 0;\n`;
+  os += `}\n`;
   os += '\n';
   return os;
 };
