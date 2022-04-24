@@ -3,8 +3,12 @@ const {getDistinct, findLowerBounds} = require('./common.code-gen');
 
 const SPACE_4 = "    ";
 
+/**
+ * returns python indentation for given level
+ * @param {number} level 
+ * @returns 
+ */
 const indent = (level = 1) => {
-  // returns python indentation for given level
   return new Array(level).fill(SPACE_4).join('');
 } ;
 
@@ -30,8 +34,12 @@ const wAreDistinctFunction = os => {
   return os;
 };
 
+/**
+ * returns a string representing in number
+ * @param {string} word 
+ * @returns {string} string
+ */
 const summedUpString = word => {
-  // returns a string representing in number
   let n = word.length;
   result = [...word].map((v, i) => `(${10 ** (n - i - 1)} * ${v})`);
   return result.join(" + ");
@@ -103,6 +111,14 @@ const wMainFunction = os => {
   return os;
 };
 
+/**
+ * function that generates python code
+ * for the given crypt arithmetic input
+ * @param {string} addend 
+ * @param {string} augend 
+ * @param {string} sum 
+ * @returns 
+ */
 const pythonCodeGen = (addend, augend, sum) => {
   const startTime = Date.now();
   // finding distinct letters

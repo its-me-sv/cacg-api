@@ -1,3 +1,6 @@
+/**
+  * custom configuration for morgan
+*/
 const morganConfig = (tokens, req, res) => {
   return "[REST API] " + [
     tokens.method(req, res),
